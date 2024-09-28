@@ -1,17 +1,42 @@
+// src/index.js
+
 import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
+import ReactDOM from 'react-dom';
 import App from './App';
-import reportWebVitals from './reportWebVitals';
+import { CssBaseline, ThemeProvider, createTheme } from '@mui/material';
+import { Provider } from 'react-redux'; // Importamos el Provider para Redux
+import { store } from './store/store';  // Importamos el store de Redux
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+// Configuración del tema de Material UI
+const theme = createTheme({
+  palette: {
+    mode: 'dark', // Indicamos que es un tema oscuro
+    primary: {
+      main: '#03DAC6', // Color principal
+      contrastText: '#FFFFFF', // Texto en elementos primarios
+    },
+    background: {
+      default: '#1A1A1A', // Fondo gris oscuro
+      paper: '#212121', // Fondo para elementos tipo papel
+    },
+    text: {
+      primary: '#E0E0E0', // Texto principal
+      secondary: '#B0BEC5', // Texto secundario
+    },
+    divider: '#37474F', // Color de divisores
+  },
+  typography: {
+    fontFamily: 'Poppins, sans-serif', // Tipografía personalizada
+  },
+});
+
+// Renderizamos la aplicación dentro del Provider para Redux y con el tema de Material UI
+ReactDOM.render(
+  <Provider store={store}> {/* Envolvemos la app en el Provider para que el store esté disponible */}
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <App />
+    </ThemeProvider>
+  </Provider>,
+  document.getElementById('root')
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
